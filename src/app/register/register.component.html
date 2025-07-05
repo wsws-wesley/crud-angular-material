@@ -1,0 +1,221 @@
+<div fxLayout="row" fxLayoutAlign="center">
+	<div fxFlex="90%" fxLayout="column">
+		<form #customerForm="ngForm" 
+			class="mb-15 mt-15"
+			(ngSubmit)="saveCustomer()">
+			<mat-card>
+				<mat-card-header>
+					<mat-card-title>{{ customer.uuid ? 'Atualizar' : 'Cadastrar' }} cliente</mat-card-title>
+				</mat-card-header>
+
+				<mat-card-content class="mb-1 mt-5 pb-0">
+					<mat-form-field class="w-full">
+						<mat-label>Nome</mat-label>
+						<input #name="ngModel" matInput
+							minlength="4"
+							name="name"
+							placeholder="Nome"
+							required
+							type="text"
+							[(ngModel)]="customer.name">
+
+						@if (name.touched && name.errors?.['required']) {
+							<mat-error>
+								O nome deve ser informado!
+							</mat-error>
+						} 
+
+						@if (name.touched && name.errors?.['minlength']) {
+							<mat-error>
+								O nome deve conter mais de 3 caracteres!
+							</mat-error>
+						}
+					</mat-form-field>
+
+					<mat-form-field class="w-full">
+						<mat-label>E-mail</mat-label>
+						<input #email="ngModel" matInput
+							email
+							name="email"
+							placeholder="email@email.com" 
+							required
+							type="email"
+							[(ngModel)]="customer.email">
+
+						@if (email.touched && email.errors?.['required']) {
+							<mat-error>
+								O e-mail deve ser informado!
+							</mat-error>
+						} 
+						
+						@if (email.touched && email.errors?.['email']) {
+							<mat-error>
+								O e-mail é inválido!
+							</mat-error>
+						}
+					</mat-form-field>
+
+					<div fxLayout="flex">
+						<mat-form-field class="mr-2 w-full" fxFlex="50%">
+							<mat-label>CPF</mat-label>
+							<input #document="ngModel" invalidDocument matInput
+								mask="000.000.000-00"
+								name="document"
+								placeholder="000.000.000-00"
+								required
+								type="text"
+								[(ngModel)]="customer.document">
+
+							@if (document.touched && document.errors?.['required']) {
+								<mat-error>
+									O CPF deve ser informado!
+								</mat-error>
+							} 
+							
+							@if (document.touched && document.errors?.['mask']?.requiredMask) {
+								<mat-error>
+									O CPF é inválido!
+								</mat-error>
+							}
+
+							@if (document.touched && document.errors?.['invalidDocument']) {
+								<mat-error>
+									O CPF é inválido!
+								</mat-error>
+							}
+						</mat-form-field>
+
+						<mat-form-field class="ml-2 w-full" fxFlex="50%">
+							<mat-label>Data de Nascimento</mat-label>
+							<input #dob="ngModel" matInput
+								mask="00/00/0000"
+								name="dob"
+								placeholder="01/01/2000"
+								required
+								type="text"
+								[(ngModel)]="customer.dob">
+
+							@if (dob.touched && dob.errors?.['required']) {
+								<mat-error>
+									A data de nascimento deve ser informada!
+								</mat-error>
+							} 
+							
+							@if (dob.touched && dob.errors?.['mask']?.requiredMask) {
+								<mat-error>
+									O data de nascimento é inválida!
+								</mat-error>
+							}
+						</mat-form-field>
+					</div>
+
+					<div fxLayout="flex">
+						<mat-form-field class="mr-2 w-full" fxFlex="50%">
+							<mat-label>Estado</mat-label>
+							<mat-select #state="ngModel"
+								name="state"
+								required 
+								(selectionChange)="getCities($event)" 
+								[(ngModel)]="customer.state">
+								<mat-option>
+									<ngx-mat-select-search
+										[formControl]="statesFilter"
+										placeholderLabel="Estado*"
+										noEntriesFoundLabel="Nenhum registro encontrado para a busca!">
+									</ngx-mat-select-search>
+								</mat-option>
+
+								@for (state of filteredStates; track $index) {
+									<mat-option [value]="state.sigla">
+										{{ state.nome }} ({{ state.sigla }})
+									</mat-option>
+								}
+							</mat-select>
+
+							@if (state.touched && state.errors?.['required']) {
+								<mat-error>
+									O Estado deve ser informado!
+								</mat-error>
+							}
+						</mat-form-field>
+
+						<mat-form-field class="ml-2 w-full" fxFlex="50%">
+							<mat-label>Cidade</mat-label>
+							<mat-select #city="ngModel"
+								name="city"
+								required 
+								[(ngModel)]="customer.city">
+								<mat-option>
+									<ngx-mat-select-search
+										[formControl]="citiesFilter"
+										placeholderLabel="Cidade*"
+										noEntriesFoundLabel="Nenhum registro encontrado para a busca!">
+									</ngx-mat-select-search>
+								</mat-option>
+
+								@for (city of filteredCities; track $index) {
+									<mat-option [value]="city.nome">
+										{{ city.nome }}
+									</mat-option>
+								}
+							</mat-select>
+
+							@if (city.touched && city.errors?.['required']) {
+								<mat-error>
+									A Cidade deve ser informada!
+								</mat-error>
+							}
+						</mat-form-field>
+					</div>
+				</mat-card-content>
+
+				<mat-card-actions>
+					<div fxFlex="100%" fxLayout="row" fxLayoutAlign="space-between center">
+						<div>
+							@if (!customer.uuid) {
+								<button mat-raised-button 
+									class="mr-2" 
+									color="primary"
+									type="submit">
+									<mat-icon fontIcon="save"></mat-icon>
+									Salvar
+								</button>
+							}
+
+							@if (customer.uuid) {
+								<button mat-raised-button
+									class="mr-2" 
+									color="primary"
+									type="submit">
+									<mat-icon fontIcon="refresh"></mat-icon>
+									Atualizar
+								</button>
+							}
+
+							<button mat-raised-button
+								class="ml-2" 
+								type="button"
+								(click)="navigateToSearch({})">
+								<mat-icon fontIcon="home"></mat-icon>
+								Voltar
+							</button>
+						</div>
+
+						@if (customer.uuid) {
+							<div>
+								<button mat-raised-button
+									class="ml-2" 
+									color="warn"
+									type="button"
+									(click)="deleteCustomer(customer.uuid)">
+									<mat-icon fontIcon="delete"></mat-icon>
+									Excluir
+								</button>
+							</div>
+						}
+					</div>
+				</mat-card-actions>
+			</mat-card>
+		</form>
+	</div>
+</div>

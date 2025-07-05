@@ -1,0 +1,13 @@
+.pb-0 {
+	padding-bottom: 0 !important;
+}
+
+mat-card-actions {
+	padding: 0 16px 16px 16px !important;
+}
+
+::ng-deep ngx-mat-select-search {
+	.mat-select-search-no-entries-found {
+		font-size: smaller !important;
+	}
+}

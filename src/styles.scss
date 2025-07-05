@@ -1,1 +1,54 @@
-/* You can add global styles to this file, and also import other style files */
+html, body { 
+	height: 100%; 
+}
+
+body {
+	background-color: rgba(63, 81, 181, 0.1);
+	font-family: Roboto, "Helvetica Neue", sans-serif; 
+	margin: 0; 
+}
+
+@for $i from 0 through 20 {
+	.mb-#{$i} {
+		margin-bottom: $i * 4px;
+	}
+	.ml-#{$i} {
+		margin-left: $i * 4px;
+	}
+	.mr-#{$i} {
+		margin-right: $i * 4px;
+	}
+  .mt-#{$i} {
+    margin-top: $i * 4px;
+  }
+  .pb-#{$i} {
+		padding-bottom: $i * 4px;
+	}
+	.pl-#{$i} {
+		padding-left: $i * 4px;
+	}
+	.pr-#{$i} {
+		padding-right: $i * 4px;
+	}
+  .pt-#{$i} {
+    padding-top: $i * 4px;
+  }
+}
+
+.w-full {
+	width: 100%;
+}
+
+.mat-mdc-snack-bar-container.success-snackbar {
+  --mdc-snackbar-container-color: #4caf50;
+  --mdc-snackbar-supporting-text-color: white;
+	--mat-snack-bar-button-color: white;
+  font-weight: bold;
+}
+
+.mat-mdc-snack-bar-container.warn-snackbar {
+  --mdc-snackbar-container-color: #f44336;
+  --mdc-snackbar-supporting-text-color: white;
+	--mat-snack-bar-button-color: white;
+  font-weight: bold;
+}

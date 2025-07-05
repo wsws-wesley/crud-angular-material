@@ -1,0 +1,93 @@
+<div fxLayout="row" fxLayoutAlign="center">
+	<div fxFlex="90%" fxLayout="column">
+		<form #searchForm="ngForm" 
+			class="mb-15 mt-15"
+			(ngSubmit)="getCustomers()">
+			<mat-card>
+				<mat-card-header>
+					<mat-card-title>
+						Consultar clientes
+					</mat-card-title>
+				</mat-card-header>
+
+				<mat-card-content class="mb-1 mt-5 pb-0">
+					<mat-form-field class="w-full">
+						<mat-label>Nome</mat-label>
+						<input matInput
+							name="name"
+							placeholder="Nome"
+							type="text"
+							[(ngModel)]="name">
+					</mat-form-field>
+
+					@if (customers.length) {
+						<table mat-table 
+							class="pb-5"
+							[dataSource]="customers">
+							<ng-container matColumnDef="uuid">
+								<th mat-header-cell *matHeaderCellDef> UUID </th>
+								<td mat-cell *matCellDef="let customer" [title]="customer.uuid"> {{ customer.uuid }} </td>
+							</ng-container>
+
+							<ng-container matColumnDef="name">
+								<th mat-header-cell *matHeaderCellDef> Nome </th>
+								<td mat-cell *matCellDef="let customer" [title]="customer.name"> {{ customer.name }} </td>
+							</ng-container>
+							
+							<ng-container matColumnDef="email">
+								<th mat-header-cell *matHeaderCellDef> E-mail </th>
+								<td mat-cell *matCellDef="let customer" [title]="customer.email"> {{ customer.email }} </td>
+							</ng-container>
+							
+							<ng-container matColumnDef="document">
+								<th mat-header-cell *matHeaderCellDef> CPF </th>
+								<td mat-cell *matCellDef="let customer" [title]="customer.document | document"> {{ customer.document | document }} </td>
+							</ng-container>
+							
+							<ng-container matColumnDef="dob">
+								<th mat-header-cell *matHeaderCellDef> Data de Nascimento </th>
+								<td mat-cell *matCellDef="let customer" [title]="customer.dob | dob"> {{ customer.dob | dob }} </td>
+							</ng-container>
+
+							<ng-container matColumnDef="actions">
+								<th mat-header-cell *matHeaderCellDef></th>
+								<td mat-cell *matCellDef="let customer">
+									<div fxLayout="row">
+										<button mat-button
+											color="primary"
+											title="Edit Customer"
+											type="button"
+											(click)="updateCustomer(customer.uuid)">
+											<mat-icon class="m-0" fontIcon="edit"></mat-icon>
+										</button>
+
+										<button mat-button
+											class="trash-icon"
+											title="Delete Customer"
+											type="button"
+											(click)="deleteCustomer(customer.uuid)">
+											<mat-icon class="m-0" fontIcon="delete"></mat-icon>
+										</button>
+									</div>
+								</td>
+							</ng-container>
+							
+							<tr mat-header-row *matHeaderRowDef="customerColumns"></tr>
+							<tr mat-row *matRowDef="let row; columns: customerColumns;"></tr>
+						</table>
+					}
+				</mat-card-content>
+
+				<mat-card-actions>
+					<button mat-raised-button 
+						class="mr-2" 
+						color="primary"
+						type="submit">
+						<mat-icon fontIcon="search"></mat-icon>
+						Consultar
+					</button>
+				</mat-card-actions>
+			</mat-card>
+		</form>
+	</div>
+</div>

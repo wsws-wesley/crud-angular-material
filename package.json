@@ -11,15 +11,21 @@
   "private": true,
   "dependencies": {
     "@angular/animations": "^19.0.0",
+    "@angular/cdk": "^19.0.1",
     "@angular/common": "^19.0.0",
     "@angular/compiler": "^19.0.0",
     "@angular/core": "^19.0.0",
+    "@angular/flex-layout": "^15.0.0-beta.42",
     "@angular/forms": "^19.0.0",
+    "@angular/material": "^19.0.1",
     "@angular/platform-browser": "^19.0.0",
     "@angular/platform-browser-dynamic": "^19.0.0",
     "@angular/router": "^19.0.0",
+    "ngx-mask": "^19.0.7",
+    "ngx-mat-select-search": "^8.0.2",
     "rxjs": "~7.8.0",
     "tslib": "^2.3.0",
+    "uuid": "^11.0.2",
     "zone.js": "~0.15.0"
   },
   "devDependencies": {

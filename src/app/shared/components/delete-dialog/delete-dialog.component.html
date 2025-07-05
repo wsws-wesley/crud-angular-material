@@ -1,0 +1,21 @@
+<h2 mat-dialog-title>Aviso</h2>
+
+<mat-dialog-content>
+  <p>{{ data.message }}</p>
+</mat-dialog-content>
+
+<mat-dialog-actions [style.margin]="'0 0 16px 16px !important'">
+  <button mat-raised-button
+    class="mr-2"
+    color="primary" 
+    (click)="onConfirm()">
+    Sim
+  </button>
+
+  <button mat-raised-button
+    class="ml-2"
+    [style.color]="'#f44336'"
+    (click)="onCancel()">
+    Não
+  </button>
+</mat-dialog-actions>

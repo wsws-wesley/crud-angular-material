@@ -1,0 +1,35 @@
+mat-toolbar {
+	align-items: center;
+	display: flex;
+	flex-direction: row;
+	justify-content: space-between;
+}
+
+.links-session {
+	display: flex;
+}
+
+a {
+	align-items: center;
+	color: white;
+	display: flex;
+	font-size: smaller;
+	position: relative;
+	text-decoration: none;
+}
+
+a::after {
+	background-color: white;
+	border-radius: 16px;
+	bottom: -4px;
+	content: "";
+	height: 2px;
+	opacity: 1;
+	position: absolute;
+	transition: ease 0.15s;
+	width: 0;
+}
+
+a:hover::after {
+	width: 100%;
+}
